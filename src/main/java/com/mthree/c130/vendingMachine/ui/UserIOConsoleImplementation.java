@@ -1,5 +1,7 @@
 package com.mthree.c130.vendingMachine.ui;
 
+import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class UserIOConsoleImplementation implements UserIO {
@@ -45,5 +47,19 @@ public class UserIOConsoleImplementation implements UserIO {
       }
 
       return input;
+   }
+
+   @Override
+   public String readString(String s, List<String> validOptions) {
+      String input;
+
+      while (true) {
+         input = readString("Type the name of an item, or cancel").toLowerCase(Locale.UK);
+         if (validOptions.contains(input)) {
+            return input;
+         } else {
+            System.out.println("Unrecognised item or option, please try again.");
+         }
+      }
    }
 }

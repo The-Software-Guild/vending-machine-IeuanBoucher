@@ -32,4 +32,8 @@ public class Item {
               "\nRemaining stock: " + remainingStock
               + "\n";
    }
+
+   public BigDecimal getPrice() {
+      return cost;
+   }
 }

@@ -2,14 +2,10 @@ package com.mthree.c130.vendingMachine.dao;
 
 import com.mthree.c130.vendingMachine.dto.Item;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class vendingMachineDaoFileImplementation implements vendingMachineDao {
    private final Map<String, Item> itemMap = new HashMap<>();
@@ -17,13 +13,13 @@ public class vendingMachineDaoFileImplementation implements vendingMachineDao {
    private final String DELIMITER = "//";
 
    @Override
-   public Collection<Item> getAllItems() {
-      return itemMap.values();
+   public List<Item> getAllItems() {
+      return new ArrayList<>(itemMap.values());
    }
 
    @Override
    public Item getItem(String name) {
-      return null;
+      return itemMap.get(name);
    }
 
    @Override
@@ -67,9 +63,33 @@ public class vendingMachineDaoFileImplementation implements vendingMachineDao {
       }
    }
 
+   private String marshallItem(Item unmarshalledItem) {
+      return String.join(DELIMITER, unmarshalledItem.getName(), unmarshalledItem.getPrice().toString(), Integer.toString(unmarshalledItem.getRemainingStock()));
+   }
 
    @Override
    public boolean saveData() {
-      return false;
+      PrintWriter out;
+      try {
+         out = new PrintWriter(new FileWriter(VENDING_MACHINE_FILENAME));
+      } catch (IOException e) {
+         System.out.println("Could not save Item library.");
+         return false;
+      }
+
+      String marshalledItem;
+      for (Item Item : itemMap.values()) {
+         marshalledItem = marshallItem(Item);
+         out.println(marshalledItem);
+         out.flush();
+      }
+      out.close();
+      return true;
+   }
+
+   @Override
+   public void decreaseStock(Item chosenItem) {
+      chosenItem.setRemainingStock(chosenItem.getRemainingStock() - 1);
+      itemMap.put(chosenItem.getName(), chosenItem);
    }
 }

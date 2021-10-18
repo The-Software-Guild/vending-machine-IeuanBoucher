@@ -3,6 +3,7 @@ package com.mthree.c130.vendingMachine.dao;
 import com.mthree.c130.vendingMachine.dto.Item;
 
 import java.util.Collection;
+import java.util.List;
 
 public interface vendingMachineDao {
 
@@ -13,4 +14,6 @@ public interface vendingMachineDao {
    boolean loadData();
 
    boolean saveData();
+
+   void decreaseStock(Item chosenItem);
 }

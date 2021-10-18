@@ -3,22 +3,27 @@ package com.mthree.c130.vendingMachine.ui;
 import com.mthree.c130.vendingMachine.dto.Item;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class vendingMachineView {
 
    private final UserIO userInputOutput;
-   private BigDecimal currentBalance = new BigDecimal("0"); // TODO where should this go?
 
    public vendingMachineView(UserIO userIO) {
       this.userInputOutput = userIO;
    }
 
-   public void displayOptions() {
-      //TODO add user input to chose option?
+   public int displayOptionsGetChoice() {
       userInputOutput.printMessage("Available Options:");
       userInputOutput.printMessage("1. Insert money");
       userInputOutput.printMessage("2. Purchase item");
+      userInputOutput.printMessage("3. Exit program");
+
+      return userInputOutput.readInt("Choose an option from the menu.", 1, 3);
    }
 
    public void displayStockedItems(Collection<Item> stockedItems) {
@@ -30,12 +35,34 @@ public class vendingMachineView {
       userInputOutput.printMessage("Current items in stock:");
 
       for (Item i : stockedItems) {
-         System.out.println(i.toString());
+         userInputOutput.printMessage(i.toString());
       }
    }
 
    public void displayLoadFailure() {
       userInputOutput.printMessage("Failed to load vending machine items. Exiting program.");
+   }
+
+   public String getUserItemChoice(Collection<Item> stockedItems) {
+      List<String> validOptions = stockedItems.stream()
+              .map(stockedItem -> stockedItem.getName().toLowerCase(Locale.UK))
+              .collect(Collectors.toList());
+
+      validOptions.add("cancel");
+
+      return userInputOutput.readString("Choose an option to purchase, or select cancel.", validOptions);
+   }
+
+   public void displayNoItemsMessage() {
+      userInputOutput.printMessage("There are no items in stock.");
+   }
+
+   public void displayProgramExitMessage() {
+      System.out.println("Thank you for using this machine.");
+   }
+
+   public void displayExceptionMessage(String message) {
+      System.out.println(message);
    }
 
 //   public void displayMessage(String message) {

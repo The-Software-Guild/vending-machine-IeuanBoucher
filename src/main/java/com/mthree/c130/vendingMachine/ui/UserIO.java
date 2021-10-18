@@ -1,5 +1,7 @@
 package com.mthree.c130.vendingMachine.ui;
 
+import java.util.List;
+
 public interface UserIO {
    void printMessage(String message);
 
@@ -8,4 +10,6 @@ public interface UserIO {
    int readInt(String prompt);
 
    int readInt(String prompt, int minValue, int maxValue);
+
+   String readString(String s, List<String> validOptions);
 }
