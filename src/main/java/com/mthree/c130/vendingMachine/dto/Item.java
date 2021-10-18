@@ -7,7 +7,6 @@ public class Item {
    private final BigDecimal cost;
    private int remainingStock;
 
-
    public Item(String name, BigDecimal cost, int remainingStock) {
       this.name = name;
       this.cost = cost;
@@ -16,5 +15,21 @@ public class Item {
 
    public void setRemainingStock(int remainingStock) {
       this.remainingStock = remainingStock;
+   }
+
+   public int getRemainingStock() {
+      return remainingStock;
+   }
+
+   public String getName() {
+      return name;
+   }
+
+   @Override
+   public String toString() {
+      return "Item name: " + name +
+              "\nItem cost: " + cost +
+              "\nRemaining stock: " + remainingStock
+              + "\n";
    }
 }
