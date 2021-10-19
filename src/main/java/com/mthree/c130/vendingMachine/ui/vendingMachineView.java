@@ -3,6 +3,7 @@ package com.mthree.c130.vendingMachine.ui;
 import com.mthree.c130.vendingMachine.dto.Item;
 import com.mthree.c130.vendingMachine.service.Coin;
 
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
@@ -26,7 +27,6 @@ public class vendingMachineView {
 
    public void displayStockedItems(Collection<Item> stockedItems) {
       if (stockedItems.size() == 0) {
-         userInputOutput.printMessage("There are no items in stock.");
          return;
       }
 
@@ -69,7 +69,7 @@ public class vendingMachineView {
 
       boolean noChangeNeed = true;
       for (int i : changeAmounts) {
-         if (i == 1) {
+         if (i != 0) {
             noChangeNeed = false;
             break;
          }
@@ -85,5 +85,11 @@ public class vendingMachineView {
             userInputOutput.printMessage(quantity + " x " + coins.get(index).displayName);
          }
       }
+   }
+
+   public BigDecimal getEnteredMoney() {
+      double amountD = userInputOutput.readDouble("Please enter an amount of money in GBP");
+
+      return new BigDecimal(Double.toString(amountD));
    }
 }

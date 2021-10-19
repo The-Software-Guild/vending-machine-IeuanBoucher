@@ -5,12 +5,13 @@ import com.mthree.c130.vendingMachine.service.serviceLayerExceptions;
 import com.mthree.c130.vendingMachine.service.vendingMachineService;
 import com.mthree.c130.vendingMachine.ui.vendingMachineView;
 
+import java.io.IOException;
 import java.util.Collection;
 
 public class vendingMachineController {
    private final vendingMachineService service;
    private final vendingMachineView view;
-   
+
    public vendingMachineController(vendingMachineService service, vendingMachineView view) {
       this.service = service;
       this.view = view;
@@ -40,8 +41,8 @@ public class vendingMachineController {
                break;
             case 3:
                loopMenu = false;
-               System.out.println(service.getCurrentBalance());
-               view.displayChange(service.calculateChange());
+               int[] amounts = service.calculateChange();
+               view.displayChange(amounts);
                break;
          }
       } while (loopMenu);
@@ -52,6 +53,7 @@ public class vendingMachineController {
 
    private boolean handlePurchaseItem() {
       Collection<Item> stockedItems = service.getStockedItems();
+      System.out.println("Entered balance: £" + service.getCurrentBalance().toString());
       view.displayStockedItems(stockedItems);
 
       if (stockedItems.size() == 0) {
@@ -73,14 +75,13 @@ public class vendingMachineController {
             view.displayChange(service.calculateChange());
          }
          return success;
-      } catch (serviceLayerExceptions.NoItemInventoryException | serviceLayerExceptions.InsufficientFundsException e) {
+      } catch (serviceLayerExceptions.NoItemInventoryException | serviceLayerExceptions.InsufficientFundsException | IOException e) {
          view.displayExceptionMessage(e.getMessage());
          return false;
       }
    }
 
    private void handleInsertMoney() {
-      //todo
-      throw new UnsupportedOperationException("no implemented");
+      service.addMoney(view.getEnteredMoney());
    }
 }

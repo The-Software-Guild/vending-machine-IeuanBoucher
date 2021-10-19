@@ -12,4 +12,6 @@ public interface UserIO {
    int readInt(String prompt, int minValue, int maxValue);
 
    String readString(String s, List<String> validOptions);
+
+   double readDouble(String prompt);
 }

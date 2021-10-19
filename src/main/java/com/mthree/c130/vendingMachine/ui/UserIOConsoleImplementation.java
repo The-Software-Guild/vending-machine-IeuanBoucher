@@ -62,4 +62,23 @@ public class UserIOConsoleImplementation implements UserIO {
          }
       }
    }
+
+   @Override
+   public double readDouble(String prompt) {
+      double amount;
+      while (true) {
+         System.out.println(prompt);
+         try {
+            amount = Double.parseDouble(consoleScanner.next());
+            if (amount <= 0.0) {
+               System.out.println("Please enter a value greater than zero.");
+            } else {
+               break;
+            }
+         } catch (Exception e) {
+            System.out.println("Please enter a valid value.");
+         }
+      }
+      return amount;
+   }
 }

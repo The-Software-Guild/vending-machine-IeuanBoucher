@@ -1,6 +1,8 @@
 package com.mthree.c130.vendingMachine;
 
 import com.mthree.c130.vendingMachine.controller.vendingMachineController;
+import com.mthree.c130.vendingMachine.dao.vendingMachineAuditDao;
+import com.mthree.c130.vendingMachine.dao.vendingMachineAuditDaoImplementation;
 import com.mthree.c130.vendingMachine.dao.vendingMachineDao;
 import com.mthree.c130.vendingMachine.dao.vendingMachineDaoFileImplementation;
 import com.mthree.c130.vendingMachine.service.vendingMachineService;
@@ -14,7 +16,8 @@ public class application {
       vendingMachineView view = new vendingMachineView(io);
 
       vendingMachineDao dao = new vendingMachineDaoFileImplementation();
-      vendingMachineService service = new vendingMachineService(dao);
+      vendingMachineAuditDao auditDao = new vendingMachineAuditDaoImplementation();
+      vendingMachineService service = new vendingMachineService(dao, auditDao);
 
       vendingMachineController controller = new vendingMachineController(service, view);
 

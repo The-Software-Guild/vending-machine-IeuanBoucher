@@ -1,0 +1,4 @@
+2021-10-19T17:01:17.866232800 : Purchase Pepsi. stock remaining: 7
+2021-10-19T17:26:47.244647600 : Purchase Tango. stock remaining: 6
+2021-10-19T17:27:26.223428 : Purchase Pepsi. stock remaining: 0
+2021-10-19T17:27:40.876970800 : Purchase Tango. stock remaining: 5

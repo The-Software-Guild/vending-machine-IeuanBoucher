@@ -1,20 +1,25 @@
 package com.mthree.c130.vendingMachine.service;
 
+import com.mthree.c130.vendingMachine.dao.vendingMachineAuditDao;
 import com.mthree.c130.vendingMachine.dao.vendingMachineDao;
 import com.mthree.c130.vendingMachine.dto.Item;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Collection;
 
 public class vendingMachineService {
    private final vendingMachineDao dao;
+   private final vendingMachineAuditDao auditDao;
 
-   private BigDecimal currentBalance = new BigDecimal("5.00"); // TODO where should this go?
+   private BigDecimal currentBalance = new BigDecimal("0.00");
 
    private final Change change = new Change();
 
-   public vendingMachineService(vendingMachineDao dao) {
+   public vendingMachineService(vendingMachineDao dao, vendingMachineAuditDao auditDao) {
       this.dao = dao;
+      this.auditDao = auditDao;
    }
 
    public Collection<Item> getStockedItems() {
@@ -30,7 +35,7 @@ public class vendingMachineService {
       return dao.loadData();
    }
 
-   public boolean attemptPurchase(String userItemChoice) throws serviceLayerExceptions.NoItemInventoryException, serviceLayerExceptions.InsufficientFundsException {
+   public boolean attemptPurchase(String userItemChoice) throws serviceLayerExceptions.NoItemInventoryException, serviceLayerExceptions.InsufficientFundsException, IOException {
       Collection<Item> stockedItems = getStockedItems();
 
       Item chosenItem = null;
@@ -50,8 +55,11 @@ public class vendingMachineService {
          throw new serviceLayerExceptions.InsufficientFundsException("Current balance is insufficient to buy that item");
       } else {
          currentBalance = currentBalance.subtract(chosenItem.getPrice());
+         currentBalance = currentBalance.setScale(2, RoundingMode.FLOOR);
          dao.decreaseStock(chosenItem);
          dao.saveData();
+
+         logEvent("Purchase " + chosenItem.getName() + ". stock remaining: " + chosenItem.getRemainingStock());
 
          return true;
       }
@@ -68,5 +76,13 @@ public class vendingMachineService {
 
    public void saveData() {
       dao.saveData();
+   }
+
+   public void logEvent(String event) throws IOException {
+      auditDao.writeAuditEntry(event);
+   }
+
+   public void addMoney(BigDecimal enteredMoney) {
+      currentBalance = (enteredMoney).setScale(2, RoundingMode.FLOOR);
    }
 }
