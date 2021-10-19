@@ -11,6 +11,8 @@ public class vendingMachineService {
 
    private BigDecimal currentBalance = new BigDecimal("5.00"); // TODO where should this go?
 
+   private final Change change = new Change();
+
    public vendingMachineService(vendingMachineDao dao) {
       this.dao = dao;
    }
@@ -57,5 +59,14 @@ public class vendingMachineService {
 
    public BigDecimal getCurrentBalance() {
       return currentBalance;
+   }
+
+   public int[] calculateChange() {
+      Change change = new Change();
+      return change.calculateChange(currentBalance.multiply(new BigDecimal("100")).intValue());
+   }
+
+   public void saveData() {
+      dao.saveData();
    }
 }

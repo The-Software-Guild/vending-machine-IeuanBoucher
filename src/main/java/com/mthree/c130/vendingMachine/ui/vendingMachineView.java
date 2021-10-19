@@ -1,12 +1,10 @@
 package com.mthree.c130.vendingMachine.ui;
 
 import com.mthree.c130.vendingMachine.dto.Item;
+import com.mthree.c130.vendingMachine.service.Coin;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
+import java.util.function.IntPredicate;
 import java.util.stream.Collectors;
 
 public class vendingMachineView {
@@ -65,7 +63,27 @@ public class vendingMachineView {
       System.out.println(message);
    }
 
-//   public void displayMessage(String message) {
-//      userIO.printMessage(message);
-//   }
+   public void displayChange(int[] changeAmounts) {
+      ArrayList<Coin> coins = new ArrayList<>(List.of(Coin.values()));
+      int quantity;
+
+      boolean noChangeNeed = true;
+      for (int i : changeAmounts) {
+         if (i == 1) {
+            noChangeNeed = false;
+            break;
+         }
+      }
+
+      if (noChangeNeed) return;
+
+      System.out.println("Dispensing change:");
+
+      for (int index = 0; index < coins.size(); index++) {
+         quantity = changeAmounts[index];
+         if (quantity != 0) {
+            userInputOutput.printMessage(quantity + " x " + coins.get(index).displayName);
+         }
+      }
+   }
 }

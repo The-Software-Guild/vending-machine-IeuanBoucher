@@ -5,14 +5,12 @@ import com.mthree.c130.vendingMachine.service.serviceLayerExceptions;
 import com.mthree.c130.vendingMachine.service.vendingMachineService;
 import com.mthree.c130.vendingMachine.ui.vendingMachineView;
 
-import java.math.BigDecimal;
 import java.util.Collection;
 
 public class vendingMachineController {
    private final vendingMachineService service;
    private final vendingMachineView view;
-
-
+   
    public vendingMachineController(vendingMachineService service, vendingMachineView view) {
       this.service = service;
       this.view = view;
@@ -42,13 +40,14 @@ public class vendingMachineController {
                break;
             case 3:
                loopMenu = false;
+               System.out.println(service.getCurrentBalance());
+               view.displayChange(service.calculateChange());
                break;
          }
       } while (loopMenu);
 
+      service.saveData();
       view.displayProgramExitMessage();
-
-      //dispense change at end?
    }
 
    private boolean handlePurchaseItem() {
@@ -71,7 +70,7 @@ public class vendingMachineController {
             System.out.println("Purchase successful.");
             System.out.println("Unspent balance: £" + service.getCurrentBalance().toString());
 
-            //todo dispense change
+            view.displayChange(service.calculateChange());
          }
          return success;
       } catch (serviceLayerExceptions.NoItemInventoryException | serviceLayerExceptions.InsufficientFundsException e) {
@@ -81,6 +80,7 @@ public class vendingMachineController {
    }
 
    private void handleInsertMoney() {
-
+      //todo
+      throw new UnsupportedOperationException("no implemented");
    }
 }
