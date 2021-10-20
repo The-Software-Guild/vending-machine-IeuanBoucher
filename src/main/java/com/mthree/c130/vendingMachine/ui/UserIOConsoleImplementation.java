@@ -69,7 +69,7 @@ public class UserIOConsoleImplementation implements UserIO {
       while (true) {
          System.out.println(prompt);
          try {
-            amount = Double.parseDouble(consoleScanner.next());
+            amount = Double.parseDouble(consoleScanner.nextLine());
             if (amount <= 0.0) {
                System.out.println("Please enter a value greater than zero.");
             } else {
@@ -79,6 +79,7 @@ public class UserIOConsoleImplementation implements UserIO {
             System.out.println("Please enter a valid value.");
          }
       }
+
       return amount;
    }
 }
