@@ -4,8 +4,10 @@ import com.mthree.c130.vendingMachine.dto.Item;
 import com.mthree.c130.vendingMachine.service.Coin;
 
 import java.math.BigDecimal;
-import java.util.*;
-import java.util.function.IntPredicate;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class vendingMachineView {

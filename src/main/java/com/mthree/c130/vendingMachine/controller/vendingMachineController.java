@@ -82,6 +82,6 @@ public class vendingMachineController {
    }
 
    private void handleInsertMoney() {
-      service.addMoney(view.getEnteredMoney());
+      service.setMoney(view.getEnteredMoney());
    }
 }

@@ -9,8 +9,8 @@ public enum Coin {
    TWO_PENCE(2, "Two pence coin"),
    PENNY(1, "Penny");
 
-   public int value;
-   public String displayName;
+   public final int value;
+   public final String displayName;
 
    Coin(int value, String displayName) {
       this.value = value;

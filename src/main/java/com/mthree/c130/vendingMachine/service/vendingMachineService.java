@@ -15,8 +15,6 @@ public class vendingMachineService {
 
    private BigDecimal currentBalance = new BigDecimal("0.00");
 
-   private final Change change = new Change();
-
    public vendingMachineService(vendingMachineDao dao, vendingMachineAuditDao auditDao) {
       this.dao = dao;
       this.auditDao = auditDao;
@@ -26,7 +24,7 @@ public class vendingMachineService {
       dao.loadData();
       Collection<Item> items = dao.getAllItems();
 
-      items.removeIf(i -> i.getRemainingStock() == 0);
+      items.removeIf(i -> i.getRemainingStock() <= 0);
 
       return items;
    }
@@ -57,7 +55,12 @@ public class vendingMachineService {
          currentBalance = currentBalance.subtract(chosenItem.getPrice());
          currentBalance = currentBalance.setScale(2, RoundingMode.FLOOR);
          dao.decreaseStock(chosenItem);
-         dao.saveData();
+
+         boolean success = dao.saveData();
+         if (!success) {
+            System.out.println("Failed to record purchase, please exit program.");
+            return false;
+         }
 
          logEvent("Purchase " + chosenItem.getName() + ". stock remaining: " + chosenItem.getRemainingStock());
 
@@ -82,7 +85,7 @@ public class vendingMachineService {
       auditDao.writeAuditEntry(event);
    }
 
-   public void addMoney(BigDecimal enteredMoney) {
+   public void setMoney(BigDecimal enteredMoney) {
       currentBalance = (enteredMoney).setScale(2, RoundingMode.FLOOR);
    }
 }
