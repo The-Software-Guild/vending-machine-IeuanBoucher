@@ -46,7 +46,6 @@ public class VendingMachineDaoFileImplementation implements VendingMachineDao {
          if (currentItem == null) {
             System.out.println("Found malformed Item, skipping");
          } else {
-//            System.out.println("loaded item:\n" + currentItem);
             itemMap.put(currentItem.getName(), currentItem);
          }
       }

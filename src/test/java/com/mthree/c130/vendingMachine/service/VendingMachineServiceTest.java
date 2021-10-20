@@ -22,13 +22,13 @@ class VendingMachineServiceTest {
 
    @Test
    void purchaseNonExistentItem() {
-      assertThrows(ServiceLayerExceptions.NoItemInventoryException.class, () -> service.attemptPurchase(""));
+      assertThrows(ServiceLayerExceptions.NoItemInventoryException.class, () -> service.makePurchase(""));
    }
 
    @Test
    void purchaseInStockItem() {
       try {
-         service.attemptPurchase("pepsi");
+         service.makePurchase("pepsi");
       } catch (Exception e) {
          System.err.println(e.getMessage());
          fail();
@@ -39,7 +39,7 @@ class VendingMachineServiceTest {
    void decreaseStockOfValidItem() {
       int initialStock = dao.getItem("pepsi").getRemainingStock();
       try {
-         service.attemptPurchase("pepsi");
+         service.makePurchase("pepsi");
       } catch (Exception e) {
          fail();
       }
@@ -52,6 +52,6 @@ class VendingMachineServiceTest {
    void purchaseWithInsufficientMoney() {
       service.setMoney(new BigDecimal("0.00"));
 
-      assertThrows(ServiceLayerExceptions.InsufficientFundsException.class, () -> service.attemptPurchase("pepsi"));
+      assertThrows(ServiceLayerExceptions.InsufficientFundsException.class, () -> service.makePurchase("pepsi"));
    }
 }

@@ -33,7 +33,7 @@ public class VendingMachineService {
       return dao.loadData();
    }
 
-   public boolean attemptPurchase(String userItemChoice) throws ServiceLayerExceptions.NoItemInventoryException, ServiceLayerExceptions.InsufficientFundsException, IOException {
+   public boolean makePurchase(String userItemChoice) throws ServiceLayerExceptions.NoItemInventoryException, ServiceLayerExceptions.InsufficientFundsException, IOException {
       Collection<Item> stockedItems = getStockedItems();
 
       Item chosenItem = null;

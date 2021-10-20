@@ -67,7 +67,7 @@ public class VendingMachineController {
       }
 
       try {
-         boolean success = service.attemptPurchase(userItemChoice);
+         boolean success = service.makePurchase(userItemChoice);
          if (success) {
             System.out.println("Purchase successful.");
             System.out.println("Unspent balance: £" + service.getCurrentBalance().toString());
