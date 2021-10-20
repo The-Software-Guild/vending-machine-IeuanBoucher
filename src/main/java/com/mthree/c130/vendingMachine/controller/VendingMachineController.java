@@ -6,6 +6,7 @@ import com.mthree.c130.vendingMachine.service.VendingMachineService;
 import com.mthree.c130.vendingMachine.ui.VendingMachineView;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Collection;
 
 public class VendingMachineController {
@@ -36,6 +37,10 @@ public class VendingMachineController {
                handleInsertMoney();
                break;
             case 2:
+               if (service.getCurrentBalance().compareTo(new BigDecimal("0")) == 0) {
+                  view.displayNoFundsMessage();
+                  break;
+               }
                boolean success = handlePurchaseItem();
                if (success) loopMenu = false;
                break;

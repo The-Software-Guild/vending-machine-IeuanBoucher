@@ -94,4 +94,8 @@ public class VendingMachineView {
 
       return new BigDecimal(Double.toString(amountD));
    }
+
+   public void displayNoFundsMessage() {
+      userInputOutput.printMessage("Please enter money before choosing an item.");
+   }
 }
