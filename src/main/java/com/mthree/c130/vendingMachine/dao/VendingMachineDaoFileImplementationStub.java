@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class vendingMachineDaoFileImplementationStub implements vendingMachineDao {
+public class VendingMachineDaoFileImplementationStub implements VendingMachineDao {
 
    private final Map<String, Item> itemMap = new HashMap<>();
 

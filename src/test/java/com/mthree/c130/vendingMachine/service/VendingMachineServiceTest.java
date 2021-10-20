@@ -8,11 +8,11 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class vendingMachineServiceTest {
+class VendingMachineServiceTest {
 
-   final vendingMachineDao dao = new vendingMachineDaoFileImplementationStub();
-   final vendingMachineAuditDao auditDao = new vendingMachineAuditDaoStubImplementation();
-   final vendingMachineService service = new vendingMachineService(dao, auditDao);
+   final VendingMachineDao dao = new VendingMachineDaoFileImplementationStub();
+   final VendingMachineAuditDao auditDao = new VendingMachineAuditDaoStubImplementation();
+   final VendingMachineService service = new VendingMachineService(dao, auditDao);
 
    @BeforeEach
    void resetData() {
@@ -22,7 +22,7 @@ class vendingMachineServiceTest {
 
    @Test
    void purchaseNonExistentItem() {
-      assertThrows(serviceLayerExceptions.NoItemInventoryException.class, () -> service.attemptPurchase(""));
+      assertThrows(ServiceLayerExceptions.NoItemInventoryException.class, () -> service.attemptPurchase(""));
    }
 
    @Test
@@ -52,6 +52,6 @@ class vendingMachineServiceTest {
    void purchaseWithInsufficientMoney() {
       service.setMoney(new BigDecimal("0.00"));
 
-      assertThrows(serviceLayerExceptions.InsufficientFundsException.class, () -> service.attemptPurchase("pepsi"));
+      assertThrows(ServiceLayerExceptions.InsufficientFundsException.class, () -> service.attemptPurchase("pepsi"));
    }
 }

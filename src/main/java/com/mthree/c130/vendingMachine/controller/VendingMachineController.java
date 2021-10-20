@@ -1,18 +1,18 @@
 package com.mthree.c130.vendingMachine.controller;
 
 import com.mthree.c130.vendingMachine.dto.Item;
-import com.mthree.c130.vendingMachine.service.serviceLayerExceptions;
-import com.mthree.c130.vendingMachine.service.vendingMachineService;
-import com.mthree.c130.vendingMachine.ui.vendingMachineView;
+import com.mthree.c130.vendingMachine.service.ServiceLayerExceptions;
+import com.mthree.c130.vendingMachine.service.VendingMachineService;
+import com.mthree.c130.vendingMachine.ui.VendingMachineView;
 
 import java.io.IOException;
 import java.util.Collection;
 
-public class vendingMachineController {
-   private final vendingMachineService service;
-   private final vendingMachineView view;
+public class VendingMachineController {
+   private final VendingMachineService service;
+   private final VendingMachineView view;
 
-   public vendingMachineController(vendingMachineService service, vendingMachineView view) {
+   public VendingMachineController(VendingMachineService service, VendingMachineView view) {
       this.service = service;
       this.view = view;
    }
@@ -75,7 +75,7 @@ public class vendingMachineController {
             view.displayChange(service.calculateChange());
          }
          return success;
-      } catch (serviceLayerExceptions.NoItemInventoryException | serviceLayerExceptions.InsufficientFundsException | IOException e) {
+      } catch (ServiceLayerExceptions.NoItemInventoryException | ServiceLayerExceptions.InsufficientFundsException | IOException e) {
          view.displayExceptionMessage(e.getMessage());
          return false;
       }

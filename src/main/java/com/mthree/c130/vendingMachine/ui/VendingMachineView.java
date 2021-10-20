@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-public class vendingMachineView {
+public class VendingMachineView {
 
    private final UserIO userInputOutput;
 
-   public vendingMachineView(UserIO userIO) {
+   public VendingMachineView(UserIO userIO) {
       this.userInputOutput = userIO;
    }
 

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 
-public class vendingMachineAuditDaoImplementation implements vendingMachineAuditDao {
+public class VendingMachineAuditDaoImplementation implements VendingMachineAuditDao {
    private final String AUDIT_LOG_FILENAME = "src/main/resources/auditLog.txt";
 
    @Override

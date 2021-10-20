@@ -6,7 +6,7 @@ import java.io.*;
 import java.math.BigDecimal;
 import java.util.*;
 
-public class vendingMachineDaoFileImplementation implements vendingMachineDao {
+public class VendingMachineDaoFileImplementation implements VendingMachineDao {
    private final Map<String, Item> itemMap = new HashMap<>();
    private final String VENDING_MACHINE_FILENAME = "src/main/resources/machineItems.txt";
    private final String DELIMITER = "//";

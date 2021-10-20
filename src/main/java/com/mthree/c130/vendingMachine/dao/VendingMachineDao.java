@@ -4,7 +4,7 @@ import com.mthree.c130.vendingMachine.dto.Item;
 
 import java.util.Collection;
 
-public interface vendingMachineDao {
+public interface VendingMachineDao {
 
    Collection<Item> getAllItems();
 

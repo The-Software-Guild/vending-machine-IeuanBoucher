@@ -1,7 +1,7 @@
 package com.mthree.c130.vendingMachine.service;
 
-import com.mthree.c130.vendingMachine.dao.vendingMachineAuditDao;
-import com.mthree.c130.vendingMachine.dao.vendingMachineDao;
+import com.mthree.c130.vendingMachine.dao.VendingMachineAuditDao;
+import com.mthree.c130.vendingMachine.dao.VendingMachineDao;
 import com.mthree.c130.vendingMachine.dto.Item;
 
 import java.io.IOException;
@@ -9,13 +9,13 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Collection;
 
-public class vendingMachineService {
-   private final vendingMachineDao dao;
-   private final vendingMachineAuditDao auditDao;
+public class VendingMachineService {
+   private final VendingMachineDao dao;
+   private final VendingMachineAuditDao auditDao;
 
    private BigDecimal currentBalance = new BigDecimal("0.00");
 
-   public vendingMachineService(vendingMachineDao dao, vendingMachineAuditDao auditDao) {
+   public VendingMachineService(VendingMachineDao dao, VendingMachineAuditDao auditDao) {
       this.dao = dao;
       this.auditDao = auditDao;
    }
@@ -33,7 +33,7 @@ public class vendingMachineService {
       return dao.loadData();
    }
 
-   public boolean attemptPurchase(String userItemChoice) throws serviceLayerExceptions.NoItemInventoryException, serviceLayerExceptions.InsufficientFundsException, IOException {
+   public boolean attemptPurchase(String userItemChoice) throws ServiceLayerExceptions.NoItemInventoryException, ServiceLayerExceptions.InsufficientFundsException, IOException {
       Collection<Item> stockedItems = getStockedItems();
 
       Item chosenItem = null;
@@ -46,11 +46,11 @@ public class vendingMachineService {
       }
 
       if (chosenItem == null) {
-         throw new serviceLayerExceptions.NoItemInventoryException("This machine has no stock for that item");
+         throw new ServiceLayerExceptions.NoItemInventoryException("This machine has no stock for that item");
       }
 
       if (chosenItem.getPrice().compareTo(currentBalance) > 0) {
-         throw new serviceLayerExceptions.InsufficientFundsException("Current balance is insufficient to buy that item");
+         throw new ServiceLayerExceptions.InsufficientFundsException("Current balance is insufficient to buy that item");
       } else {
          currentBalance = currentBalance.subtract(chosenItem.getPrice());
          currentBalance = currentBalance.setScale(2, RoundingMode.FLOOR);

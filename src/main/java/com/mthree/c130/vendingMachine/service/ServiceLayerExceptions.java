@@ -1,6 +1,6 @@
 package com.mthree.c130.vendingMachine.service;
 
-public class serviceLayerExceptions {
+public class ServiceLayerExceptions {
    public static class InsufficientFundsException extends Exception {
       public InsufficientFundsException(String message) {
          super(message);
