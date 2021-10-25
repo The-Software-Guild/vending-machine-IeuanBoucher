@@ -3,6 +3,8 @@
 
 .idea/
 
+.txt
+
 # Log file
 *.log
 
